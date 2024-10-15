@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { Database } from "./database.js";
 import { buildRoutePath } from "./utils/build-route-path.js";
+import { parse } from "csv-parse";
+import fs from "node:fs";
 
 const database = new Database();
 
@@ -17,6 +19,48 @@ export const routes = [
       );
 
       return res.end(JSON.stringify(tasks));
+    },
+  },
+  {
+    method: "POST",
+    path: buildRoutePath("/tasks/csv"),
+    handler: (req, res) => {
+      const csvPath = new URL("../file.csv", import.meta.url);
+
+      const stream = fs.createReadStream(csvPath);
+
+      const csvParse = parse({
+        delimiter: ",",
+        skipEmptyLines: true,
+        fromLine: 2,
+      });
+
+      async function execute() {
+        const linesParse = stream.pipe(csvParse);
+
+        for await (const line of linesParse) {
+          const [title, description] = line;
+
+          if (!title || !description) {
+            return res.writeHead(422).end();
+          }
+
+          const task = {
+            id: randomUUID(),
+            title,
+            description,
+            completed_at: null,
+            created_at: new Date(),
+            updated_at: new Date(),
+          };
+
+          database.insert("tasks", task);
+        }
+      }
+
+      execute();
+
+      return res.writeHead(201).end();
     },
   },
   {

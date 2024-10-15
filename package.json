@@ -16,5 +16,8 @@
     "url": "https://github.com/rianperassoli/rs-challenge-01-node-24/issues"
   },
   "homepage": "https://github.com/rianperassoli/rs-challenge-01-node-24#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "csv-parse": "^5.5.6"
+  }
 }
