@@ -1,0 +1,20 @@
+{
+  "name": "challenge-01-node-24",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rianperassoli/rs-challenge-01-node-24.git"
+  },
+  "author": "Rian Perassoli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rianperassoli/rs-challenge-01-node-24/issues"
+  },
+  "homepage": "https://github.com/rianperassoli/rs-challenge-01-node-24#readme",
+  "description": ""
+}
